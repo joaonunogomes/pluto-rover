@@ -1,0 +1,13 @@
+version: "3"
+services: 
+    dotnet-boilerplate-api:
+        build: 
+          context: .
+          dockerfile: Dockerfile
+        image: "dotnet-boilerplate-api"
+        ports:
+          - "9199:8080"
+        volumes: 
+          - logs-dotnet-boilerplate-api:/logs/dotnet-boilerplate-api
+volumes: 
+  logs-dotnet-boilerplate-api:
