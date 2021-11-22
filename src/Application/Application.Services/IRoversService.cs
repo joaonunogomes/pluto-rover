@@ -1,11 +1,13 @@
 ﻿using Application.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace PlutoRover.Application.Services
 {
     public interface IRoversService
     {
-        Rover CreateRover(Rover rover);
+        Task<Rover> CreateRover(Rover rover);
 
-        Rover MoveRover(RoverCommand command);
+        void MoveRover(Guid id, RoverCommand command);
     }
 }

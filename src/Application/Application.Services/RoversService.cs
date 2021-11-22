@@ -1,16 +1,29 @@
 ﻿using Application.Dto;
+using Data.Repository;
 using System;
+using System.Threading.Tasks;
 
 namespace PlutoRover.Application.Services
 {
     public class RoversService : IRoversService
     {
-        public Rover CreateRover(Rover rover)
+        private readonly IRoverRepository roverRepository;
+
+        public RoversService(IRoverRepository roverRepository)
         {
-            throw new NotImplementedException();
+            this.roverRepository = roverRepository;
         }
 
-        public Rover MoveRover(RoverCommand command)
+        public async Task<Rover> CreateRover(Rover rover)
+        {
+            rover.Id = Guid.NewGuid();
+
+            await this.roverRepository.AddAsync(rover);
+
+            return rover;
+        }
+
+        public void MoveRover(Guid id, RoverCommand command)
         {
             throw new NotImplementedException();
         }

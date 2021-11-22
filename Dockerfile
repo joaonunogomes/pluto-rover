@@ -21,7 +21,7 @@ WORKDIR /src
 RUN mkdir -p /test-results
 COPY --from=build /src .
 COPY --from=build /root/.nuget /root/.nuget
-RUN dotnet test DotNetCoreBoilerplateApi.sln
+RUN dotnet test PlutoRover.sln
 
 # Run api
 FROM base AS final
@@ -31,4 +31,4 @@ COPY --from=build /app .
 
 ENV SERVICE_PORT 9199
 ENV ASPNETCORE_ENVIRONMENT ${RUN_ENV}
-ENTRYPOINT ["dotnet", "DotNetCoreBoilerplateApi.Presentation.Api.dll"]
+ENTRYPOINT ["dotnet", "PlutoRover.Presentation.Api.dll"]

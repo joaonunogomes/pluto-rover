@@ -1,13 +1,13 @@
 version: "3"
 services: 
-    dotnet-boilerplate-api:
+    pluto-rover-api:
         build: 
           context: .
           dockerfile: Dockerfile
-        image: "dotnet-boilerplate-api"
+        image: "pluto-rover-api"
         ports:
           - "9199:8080"
         volumes: 
-          - logs-dotnet-boilerplate-api:/logs/dotnet-boilerplate-api
+          - logs-pluto-rover-api:/logs/pluto-rover-api
 volumes: 
-  logs-dotnet-boilerplate-api:
+  logs-pluto-rover-api:
