@@ -1,10 +1,10 @@
 ﻿using Application.Dto;
+using Application.Services.Tests.Fakes;
 using CtorMock.Moq;
-using Data.Repository;
 using FluentAssertions;
-using Infrastructure.CrossCutting.Rover;
 using Moq;
 using PlutoRover.Application.Services;
+using PlutoRover.Data.Repository;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Application.Services.Tests
 {
-    public class RoversServiceTests : MockBase<RoversService>
+    public class RoversServiceTests : MockBase<RoversServiceFake>
     {
         private readonly Mock<IRoverRepository> roverRepositoryMock;
         private readonly Guid ROVER_ID = Guid.NewGuid();
@@ -129,6 +129,26 @@ namespace Application.Services.Tests
                 this.ROVER_ID,
                 It.IsAny<Rover>()),
                 Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenObstacleIsFound_ShouldThrowException()
+        {
+            // Arrange
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover { X = 1, Y = 11, Direction = RoverDirectionType.N });
+
+            // Act
+            Func<Task> act = async () => await this.Subject.MoveRoverAsync(this.ROVER_ID, RoverCommand.F);
+
+            // Assert
+            await act.Should().ThrowAsync<Exception>();
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.IsAny<Rover>()),
+                Times.Never);
         }
     }
 }

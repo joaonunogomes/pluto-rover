@@ -1,8 +1,9 @@
 ﻿using Application.Dto;
 using Application.Dto.Extensions;
-using Data.Repository;
-using Infrastructure.CrossCutting.Rover;
+using PlutoRover.Data.Repository;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PlutoRover.Application.Services
@@ -10,10 +11,12 @@ namespace PlutoRover.Application.Services
     public class RoversService : IRoversService
     {
         private readonly IRoverRepository roverRepository;
+        private readonly IDictionary<int, int> obstacles;
 
-        public RoversService(IRoverRepository roverRepository)
+        public RoversService(IRoverRepository roverRepository, IDictionary<int, int> obstacles)
         {
             this.roverRepository = roverRepository;
+            this.obstacles = obstacles;
         }
 
         public async Task<Rover> CreateRoverAsync(Rover rover)
@@ -43,6 +46,11 @@ namespace PlutoRover.Application.Services
                 case RoverDirectionType.W:
                     rover.MoveRoverWhenPointingWest(command);
                     break;
+            }
+
+            if (obstacles.Any(o => o.Key == rover.X && o.Value == rover.Y))
+            {
+                throw new Exception($"Obstacle found at position ({rover.X},{rover.Y}). Can't move, please avoid this obstacle!");
             }
 
             await this.roverRepository.UpdateAsync(id, rover);

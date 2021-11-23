@@ -1,7 +1,6 @@
 ﻿using Application.Dto;
-using PlutoRover.Data.Repository.Mongo.Generics;
 
-namespace Data.Repository
+namespace PlutoRover.Data.Repository
 {
     public interface IRoverRepository : IRepository<Rover>
     {

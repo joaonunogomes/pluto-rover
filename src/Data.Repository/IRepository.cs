@@ -1,4 +1,4 @@
-﻿namespace PlutoRover.Data.Repository.Mongo.Generics
+﻿namespace PlutoRover.Data.Repository
 {
     using System;
     using System.Linq.Expressions;
