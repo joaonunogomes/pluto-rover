@@ -164,7 +164,7 @@ namespace Application.Services.Tests
             this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
             this.roverRepositoryMock.Verify(x => x.UpdateAsync(
                 this.ROVER_ID,
-                It.Is<Rover>(rover => rover.X == PlutoSettings.GridSize && rover.Direction == RoverDirectionType.N)),
+                It.Is<Rover>(rover => rover.X == PlutoSettings.GridSize && rover.Y == yMock && rover.Direction == RoverDirectionType.N)),
                 Times.Once);
         }
 
@@ -219,6 +219,168 @@ namespace Application.Services.Tests
             this.roverRepositoryMock.Verify(x => x.UpdateAsync(
                 this.ROVER_ID,
                 It.Is<Rover>(rover => rover.X == xMock && rover.Y == yMock && rover.Direction == RoverDirectionType.W)),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingSouthAndRoverIsNotAtGridLimitAndMovingForwardOneTime_ShouldUpdateRoverYPosition()
+        {
+            // Arrange
+            var xMock = 3;
+            var yMock = 35;
+            var directionMock = RoverDirectionType.S;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == xMock && rover.Y == yMock + 1 && rover.Direction == RoverDirectionType.S)),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingSouthAndRoverIsAtGridLimitAndMovingForwardOneTime_ShouldUpdateRoverToDefaultYPosition()
+        {
+            // Arrange
+            var xMock = 3;
+            var yMock = PlutoSettings.GridSize;
+            var directionMock = RoverDirectionType.S;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == xMock && rover.Y == default && rover.Direction == RoverDirectionType.S)),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingSouthAndRoverIsNotAtGridLimitAndMovingBackwardsOneTime_ShouldUpdateRoverYPosition()
+        {
+            // Arrange
+            var xMock = 3;
+            var yMock = 35;
+            var directionMock = RoverDirectionType.S;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.B);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == xMock && rover.Y == yMock - 1 && rover.Direction == RoverDirectionType.S)),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingSouthAndRoverIsAtGridLimitAndMovingBackwardsOneTime_ShouldUpdateRoverToTheEndOfYPosition()
+        {
+            // Arrange
+            var xMock = 3;
+            var yMock = default(int);
+            var directionMock = RoverDirectionType.S;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.B);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == xMock && rover.Y == PlutoSettings.GridSize && rover.Direction == RoverDirectionType.S)),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingSouthAndMovingRight_ShouldUpdateRoverDirectionToWest()
+        {
+            // Arrange
+            var xMock = 35;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.S;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.R);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == xMock && rover.Y == yMock && rover.Direction == RoverDirectionType.W)),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingSouthAndMovingLeft_ShouldUpdateRoverDirectionToEast()
+        {
+            // Arrange
+            var xMock = 35;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.S;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.L);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == xMock && rover.Y == yMock && rover.Direction == RoverDirectionType.E)),
                 Times.Once);
         }
     }

@@ -34,6 +34,9 @@ namespace PlutoRover.Application.Services
                 case RoverDirectionType.N:
                     rover.MoveRoverWhenPointingNorth(command);
                     break;
+                case RoverDirectionType.S:
+                    rover.MoveRoverWhenPointingSouth(command);
+                    break;
             }
 
             await this.roverRepository.UpdateAsync(id, rover);
