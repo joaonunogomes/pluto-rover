@@ -45,7 +45,7 @@ can give the rover are ‘F’,’B’,’L’ and ‘R’
 
 The following orientation was assumed when developing this API, where the arrow next to the rover represents the direction the rover is pointing to:
 
-![alt text](https://github.com/joaonunogomes/pluto-rover/blob/4bf2870bcb791e63d3e80741c39d88558e4809b9/rover.PNG)
+![rover](https://github.com/joaonunogomes/pluto-rover/blob/4bf2870bcb791e63d3e80741c39d88558e4809b9/rover.PNG)
 
 ## Docker
 
@@ -68,4 +68,4 @@ With this API you can:
 
 The API specification is available on `http://localhost:9199/swagger`
 
-![alt text](https://github.com/joaonunogomes/pluto-rover/blob/9dc9e08427cc10e63baf93bbfa4672dc3b61c900/README.md#L61)
+![api-spec](https://github.com/joaonunogomes/pluto-rover/blob/8ca4fea12ede67de14be0ed0e962ab71dcf70097/README.md#L71)
