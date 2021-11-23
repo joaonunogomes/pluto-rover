@@ -43,7 +43,7 @@ can give the rover are ‘F’,’B’,’L’ and ‘R’
 
 ## Rover orientation
 
-The following orientation was assumed when developing this API, where the arrow next to the rover represents where the rover is pointing to:
+The following orientation was assumed when developing this API, where the arrow next to the rover represents the direction the rover is pointing to:
 
 ![alt text](https://github.com/joaonunogomes/pluto-rover/blob/4bf2870bcb791e63d3e80741c39d88558e4809b9/rover.PNG)
 
@@ -54,5 +54,5 @@ If needed, for local testing purposes, you can also use the docker-compose to he
 
 ## Project Structure
 
-This project was structure folowing Domain Drive Design patterns.
-The Visual Studio project is divided into several business layers that each one will serve its own purpose.
+This project structure follows Domain Drive Design pattern.
+The Visual Studio project is divided into several business layers, each one will serve its own responsability purpose.
