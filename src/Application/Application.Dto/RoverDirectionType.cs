@@ -1,4 +1,4 @@
-﻿namespace Application.Dto
+﻿namespace PlutoRover.Application.Dto
 {
     public enum RoverDirectionType
     {

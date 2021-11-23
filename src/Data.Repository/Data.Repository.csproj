@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>Data.Repository</AssemblyName>
-    <RootNamespace>Data.Repository</RootNamespace>
+    <AssemblyName>PlutoRover.Data.Repository</AssemblyName>
+    <RootNamespace>PlutoRover.Data.Repository</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

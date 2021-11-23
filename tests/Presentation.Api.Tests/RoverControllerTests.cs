@@ -1,16 +1,16 @@
-﻿using Application.Dto;
-using CtorMock.Moq;
+﻿using CtorMock.Moq;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using PlutoRover.Application.Dto;
 using PlutoRover.Application.Services;
 using PlutoRover.ClimbingApi.Presentation.Api.Controllers;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Presentation.Api.Tests
+namespace PlutoRover.Presentation.Api.Tests
 {
     public class RoverControllerTests : MockBase<RoversController>
     {

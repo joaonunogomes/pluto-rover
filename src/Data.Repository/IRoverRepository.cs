@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using PlutoRover.Application.Dto;
 
 namespace PlutoRover.Data.Repository
 {

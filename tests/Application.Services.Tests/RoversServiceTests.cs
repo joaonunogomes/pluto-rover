@@ -1,16 +1,15 @@
-﻿using Application.Dto;
-using Application.Services.Tests.Fakes;
-using CtorMock.Moq;
+﻿using CtorMock.Moq;
 using FluentAssertions;
 using Moq;
-using PlutoRover.Application.Services;
+using PlutoRover.Application.Dto;
+using PlutoRover.Application.Services.Tests.Fakes;
 using PlutoRover.Data.Repository;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
 
-namespace Application.Services.Tests
+namespace PlutoRover.Application.Services.Tests
 {
     public class RoversServiceTests : MockBase<RoversServiceFake>
     {

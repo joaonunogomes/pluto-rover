@@ -42,4 +42,4 @@ logs*
 *.dotCover
 
 # Logs
-DotNetCoreBoilerplateApi.climbing-api/
+pluto-rover-api/

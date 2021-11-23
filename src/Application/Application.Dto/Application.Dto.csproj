@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>PlutoRover.Application.Dto</AssemblyName>
+    <RootNamespace>PlutoRover.Application.Dto</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Bouldering\**" />

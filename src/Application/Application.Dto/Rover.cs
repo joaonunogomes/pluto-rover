@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.Dto
+namespace PlutoRover.Application.Dto
 {
     public class Rover
     {

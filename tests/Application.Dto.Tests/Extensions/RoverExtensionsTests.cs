@@ -1,9 +1,9 @@
-﻿using Application.Dto.Extensions;
-using FluentAssertions;
-using Infrastructure.CrossCutting.Rover;
+﻿using FluentAssertions;
+using PlutoRover.Application.Dto.Extensions;
+using PlutoRover.Infrastructure.CrossCutting.Rover;
 using Xunit;
 
-namespace Application.Dto.Tests.Extensions
+namespace PlutoRover.Application.Dto.Tests.Extensions
 {
     public class RoverExtensionsTests
     {

@@ -1,6 +1,6 @@
-﻿using Infrastructure.CrossCutting.Rover;
+﻿using PlutoRover.Infrastructure.CrossCutting.Rover;
 
-namespace Application.Dto.Extensions
+namespace PlutoRover.Application.Dto.Extensions
 {
     public static class RoverExtensions
     {

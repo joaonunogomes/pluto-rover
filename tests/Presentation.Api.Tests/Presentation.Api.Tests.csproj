@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>PlutoRover.Presentation.Api.Tests</AssemblyName>
+
+    <RootNamespace>PlutoRover.Presentation.Api.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

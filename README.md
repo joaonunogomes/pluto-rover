@@ -56,3 +56,16 @@ If needed, for local testing purposes, you can also use the docker-compose to he
 
 This project structure follows Domain Drive Design pattern.
 The Visual Studio project is divided into several business layers, each one will serve its own responsability purpose.
+
+## API
+
+This API provides a way to move Pluto rover.
+With this API you can:
+
+- Create a Rover
+- Get the Rover
+- Move the Rover
+
+The API specification is available on `http://localhost:9199/swagger`
+
+![alt text](https://github.com/joaonunogomes/pluto-rover/blob/9dc9e08427cc10e63baf93bbfa4672dc3b61c900/README.md#L61)

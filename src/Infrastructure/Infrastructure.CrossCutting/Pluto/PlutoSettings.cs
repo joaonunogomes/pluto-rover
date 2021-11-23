@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Infrastructure.CrossCutting.Rover
+﻿namespace PlutoRover.Infrastructure.CrossCutting.Rover
 {
     public class PlutoSettings
     {

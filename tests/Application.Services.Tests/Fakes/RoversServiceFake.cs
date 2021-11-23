@@ -2,7 +2,7 @@
 using PlutoRover.Data.Repository;
 using System.Collections.Generic;
 
-namespace Application.Services.Tests.Fakes
+namespace PlutoRover.Application.Services.Tests.Fakes
 {
     public class RoversServiceFake : RoversService
     {
