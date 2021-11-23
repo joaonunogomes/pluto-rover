@@ -68,4 +68,4 @@ With this API you can:
 
 The API specification is available on `http://localhost:9199/swagger`
 
-![api-spec](https://github.com/joaonunogomes/pluto-rover/blob/8ca4fea12ede67de14be0ed0e962ab71dcf70097/README.md#L71)
+![api-spec](https://github.com/joaonunogomes/pluto-rover/blob/cb9058c919ad986475cd745a912474237b5481ff/swagger.PNG)
