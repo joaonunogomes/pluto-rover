@@ -68,7 +68,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingNorth_WhenMovingBackwardsAndCurrentRoverYValueIsAtGridBeginning_ShouldSetYValueToGridLimit()
+        public void MoveRoverWhenPointingNorth_WhenMovingBackwardsAndCurrentRoverYValueIsAtGridBeginning_ShouldSetYValueToEndOfGrid()
         {
             // Arrange
             var xMock = 3;
@@ -188,7 +188,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingSouth_WhenMovingBackwardsAndCurrentRoverYValueIsAtGridBeginning_ShouldSetYValueToGridLimit()
+        public void MoveRoverWhenPointingSouth_WhenMovingBackwardsAndCurrentRoverYValueIsAtGridBeginning_ShouldSetYValueToEndOfGrid()
         {
             // Arrange
             var xMock = 3;
@@ -308,7 +308,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingEast_WhenMovingBackwardsAndCurrentRoverXValueIsAtGridBeginning_ShouldSetXValueToGridLimit()
+        public void MoveRoverWhenPointingEast_WhenMovingBackwardsAndCurrentRoverXValueIsAtGridBeginning_ShouldSetXValueToEndOfGrid()
         {
             // Arrange
             var xMock = default(int);
@@ -365,6 +365,126 @@ namespace Application.Dto.Tests.Extensions
             rover.X.Should().Be(xMock);
             rover.Y.Should().Be(yMock);
             rover.Direction.Should().Be(RoverDirectionType.N);
+        }
+
+        [Fact]
+        public void MoveRoverWhenPointingWest_WhenMovingForwardAndCurrentRoverXValueIsNotAtGridLimit_ShoulDecreaseXValueByOne()
+        {
+            // Arrange
+            var xMock = 35;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.W;
+
+            var rover = new Rover(xMock, yMock, directionMock);
+
+            // Act
+            rover.MoveRoverWhenPointingWest(RoverCommand.F);
+
+            // Assert 
+            rover.Should().NotBeNull();
+            rover.X.Should().Be(xMock - 1);
+            rover.Y.Should().Be(yMock);
+            rover.Direction.Should().Be(directionMock);
+        }
+
+        [Fact]
+        public void MoveRoverWhenPointingWest_WhenMovingBackwardsAndCurrentRoverXValueIsNotAtGridLimit_ShouldIncreaseXValueByOne()
+        {
+            // Arrange
+            var xMock = 35;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.W;
+
+            var rover = new Rover(xMock, yMock, directionMock);
+
+            // Act
+            rover.MoveRoverWhenPointingWest(RoverCommand.B);
+
+            // Assert 
+            rover.Should().NotBeNull();
+            rover.X.Should().Be(xMock + 1);
+            rover.Y.Should().Be(yMock);
+            rover.Direction.Should().Be(directionMock);
+        }
+
+        [Fact]
+        public void MoveRoverWhenPointingWest_WhenMovingForwardAndCurrentRoverXValueIsAtGridBeginning_ShouldSetXValueToEndOfGrid()
+        {
+            // Arrange
+            var xMock = default(int);
+            var yMock = 3;
+            var directionMock = RoverDirectionType.W;
+
+            var rover = new Rover(xMock, yMock, directionMock);
+
+            // Act
+            rover.MoveRoverWhenPointingWest(RoverCommand.F);
+
+            // Assert
+            rover.Should().NotBeNull();
+            rover.X.Should().Be(PlutoSettings.GridSize);
+            rover.Y.Should().Be(yMock);
+            rover.Direction.Should().Be(directionMock);
+        }
+
+        [Fact]
+        public void MoveRoverWhenPointingWest_WhenMovingBackwardsAndCurrentRoverXValueIsAtEndOfGrid_ShouldSetXValueToGridBeginning()
+        {
+            // Arrange
+            var xMock = PlutoSettings.GridSize;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.W;
+
+            var rover = new Rover(xMock, yMock, directionMock);
+
+            // Act
+            rover.MoveRoverWhenPointingWest(RoverCommand.B);
+
+            // Assert
+            rover.Should().NotBeNull();
+            rover.X.Should().Be(default);
+            rover.Y.Should().Be(yMock);
+            rover.Direction.Should().Be(directionMock);
+        }
+
+        [Fact]
+        public void MoveRoverWhenPointingWest_WhenRotatingRoverToRight_ShouldUpdateRoverDirectionToNorth()
+        {
+            // Arrange
+            var xMock = 35;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.W;
+
+            var rover = new Rover(xMock, yMock, directionMock);
+
+            // Act
+            rover.MoveRoverWhenPointingWest(RoverCommand.R);
+
+            // Assert
+            rover.Should().NotBeNull();
+            rover.X.Should().Be(xMock);
+            rover.Y.Should().Be(yMock);
+            rover.Direction.Should().Be(RoverDirectionType.N);
+        }
+
+        [Fact]
+        public void MoveRoverWhenPointingWest_WhenRotatingRoverToLeft_ShouldUpdateRoverDirectionToSouth()
+        {
+            // Arrange
+            var xMock = 35;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.W;
+
+            var rover = new Rover(xMock, yMock, directionMock);
+
+            // Act
+            rover.MoveRoverWhenPointingWest(RoverCommand.L);
+
+            // Assert
+            rover.Should().NotBeNull();
+            rover.X.Should().Be(xMock);
+            rover.Y.Should().Be(yMock);
+            rover.Direction.Should().Be(RoverDirectionType.S);
         }
     }
 }
