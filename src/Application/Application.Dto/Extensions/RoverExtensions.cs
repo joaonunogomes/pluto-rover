@@ -9,10 +9,10 @@ namespace Application.Dto.Extensions
             switch (command)
             {
                 case RoverCommand.F:
-                    rover.X = rover.X == PlutoSettings.GridSize ? default : rover.X + 1;
+                    rover.Y = rover.Y == PlutoSettings.GridSize ? default : rover.Y + 1;
                     break;
                 case RoverCommand.B:
-                    rover.X = rover.X == default ? PlutoSettings.GridSize : rover.X - 1;
+                    rover.Y = rover.Y == default ? PlutoSettings.GridSize : rover.Y - 1;
                     break;
                 case RoverCommand.R:
                     rover.Direction = RoverDirectionType.E;
