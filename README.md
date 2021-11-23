@@ -39,13 +39,13 @@ can give the rover are ‘F’,’B’,’L’ and ‘R’
 
 - The grid dimensions are configured on a static class called `PlutoSettings` that can be changed and should not have negative impact on the implementation.
 - In order to keep it simple, Pluto obstacles are set on RoverService via dependency injection.
-- A `IRepository` interface is provided in order to stablish a contract for database access. In order to simplify and focus on the challenge proposed, no repository implementation was provided, so feel free to add a custom one if wanted, that should not change the Rover implementation.
+- A `IRepository` interface is provided in order to establish a contract for database access. To simplify and focus on the challenge proposed, no repository implementation was provided, so feel free to add a custom one if wanted, that should not change the Rover implementation.
 
 ## Rover orientation
 
 The following orientation was assumed when developing this API, where the arrow next to the rover represents where the rover is pointing to:
 
-![alt text](./rover.png)
+![alt text](https://github.com/joaonunogomes/pluto-rover/blob/4bf2870bcb791e63d3e80741c39d88558e4809b9/rover.PNG)
 
 ## Docker
 
