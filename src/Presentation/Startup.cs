@@ -11,6 +11,8 @@ namespace PlutoRover.Presentation.Api
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Microsoft.OpenApi.Models;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
     using PlutoRover.Infrastructure.CrossCutting.Configuration;
     using Swashbuckle.AspNetCore.SwaggerGen;
     using System;
@@ -36,13 +38,12 @@ namespace PlutoRover.Presentation.Api
                 .AddSingleton<IApplicationSettings>(appSettings);
 
             services
-                .AddControllers(options =>
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
                 {
-                    options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
-                })
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 });
 
             services.AddLogging();
@@ -129,8 +130,9 @@ namespace PlutoRover.Presentation.Api
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-                c.DescribeAllEnumsAsStrings();
             });
+
+            services.AddSwaggerGenNewtonsoftSupport();
         }
     }
 }

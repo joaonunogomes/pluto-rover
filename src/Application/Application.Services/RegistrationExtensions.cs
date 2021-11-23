@@ -6,7 +6,7 @@ namespace PlutoRover.Application.Services
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            return services;
+            return services.AddScoped<IRoversService, RoversService>();
         }
     }
 }
