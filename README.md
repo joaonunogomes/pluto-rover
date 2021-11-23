@@ -38,6 +38,7 @@ can give the rover are ‘F’,’B’,’L’ and ‘R’
 ## Implementation Notes:
 
 - The grid dimensions are configured on a static class called `PlutoSettings` that can be changed and should not have negative impact on the implementation.
+- In order to keep it simples, Pluto obstacles are configured on a variable in RoversService.
 - A `IRepository` interface is provided in order to stablish a contract for database access. In order to simplify and focus on the challenge proposed, no repository implementation was provided, so feel free to add a custom one if wanted, that should not change the Rover implementation.
 
 ## Rover orientation

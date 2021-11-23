@@ -54,10 +54,10 @@ namespace Presentation.Api.Tests
                 .ThrowsAsync(new Exception());
 
             // Act
-            Func<Task> act = async () => await this.Subject.PostAsync(roverMock);
+            var act = await this.Subject.PostAsync(roverMock);
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            act.Should().BeOfType(typeof(BadRequestObjectResult));
             this.roversServiceMock.Verify(x => x.CreateRoverAsync(roverMock), Times.Once);
         }
 
@@ -78,7 +78,7 @@ namespace Presentation.Api.Tests
         }
 
         [Fact]
-        public async Task GetAsync_WhenRoversServicethrowsException_ShouldThrowException()
+        public async Task GetAsync_WhenRoversServiceThrowsException_ShouldReturnBadRequest()
         {
             // Arrange
             this.roversServiceMock
@@ -86,10 +86,10 @@ namespace Presentation.Api.Tests
                 .ThrowsAsync(new Exception());
 
             // Act
-            Func<Task> act = async () => await this.Subject.GetAsync(this.ROVER_ID);
+            var act = await this.Subject.GetAsync(this.ROVER_ID);
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            act.Should().BeOfType(typeof(BadRequestObjectResult));
             this.roversServiceMock.Verify(x => x.GetRoverAsync(this.ROVER_ID), Times.Once);
         }
 
@@ -155,6 +155,31 @@ namespace Presentation.Api.Tests
             // Assert
             act.Should().BeOfType(typeof(NoContentResult));
             this.roversServiceMock.Verify(x => x.MoveRoverAsync(this.ROVER_ID, RoverCommand.L), Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveAsync_WhenRoversServiceThrowsException_ShouldReturnBadRequest()
+        {
+            // Arrange
+            var errorMessage = "This is some error message";
+
+            this.roversServiceMock
+                .Setup(x => x.MoveRoverAsync(It.IsAny<Guid>(), It.IsAny<RoverCommand>()))
+                .ThrowsAsync(new Exception(errorMessage));
+
+            // Act
+            var act = await this.Subject.MoveAsync(this.ROVER_ID, RoverCommand.L);
+
+            // Assert
+            act.Should().BeOfType(typeof(BadRequestObjectResult));
+            this.roversServiceMock.Verify(x => x.MoveRoverAsync(this.ROVER_ID, RoverCommand.L), Times.Once);
+            this.loggerMock.Verify(
+                logger => logger.Log(
+                    It.Is<LogLevel>(logLevel => logLevel == LogLevel.Error),
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    It.IsAny<Exception>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()), Times.Once);
         }
     }
 }

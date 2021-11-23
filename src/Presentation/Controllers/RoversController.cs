@@ -28,13 +28,21 @@ namespace PlutoRover.ClimbingApi.Presentation.Api.Controllers
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Rover))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PostAsync([FromBody] Rover rover)
         {
-            var createdRover = await this.roversService.CreateRoverAsync(rover);
+            try
+            {
+                var createdRover = await this.roversService.CreateRoverAsync(rover);
 
-            this.logger.LogInformation($"Created rover at: {rover.X},{rover.Y},{rover.Direction}", rover);
+                this.logger.LogInformation($"Created rover at: {rover.X},{rover.Y},{rover.Direction}", rover);
 
-            return this.CreatedAtAction(nameof(GetAsync), createdRover);
+                return this.CreatedAtAction(nameof(GetAsync), createdRover);
+            }
+            catch
+            {
+                return BadRequest("Couldn't create rover");
+            }
         }
 
         /// <summary>
@@ -44,9 +52,17 @@ namespace PlutoRover.ClimbingApi.Presentation.Api.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Rover))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id)
         {
-            return this.Ok(await this.roversService.GetRoverAsync(id));
+            try
+            {
+                return this.Ok(await this.roversService.GetRoverAsync(id));
+            }
+            catch
+            {
+                return BadRequest("Couldn't get rover");
+            }
         }
 
         /// <summary>
@@ -57,12 +73,21 @@ namespace PlutoRover.ClimbingApi.Presentation.Api.Controllers
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(Rover))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> MoveAsync([FromRoute] Guid id, [FromBody] RoverCommand command)
         {
-            this.logger.LogInformation($"Moving rover: {command}");
+            try
+            {
+                this.logger.LogInformation($"Moving rover: {command}");
 
-            await this.roversService.MoveRoverAsync(id, command);
-            return this.NoContent();
+                await this.roversService.MoveRoverAsync(id, command);
+                return this.NoContent();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message, ex);
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
