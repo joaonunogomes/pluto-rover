@@ -33,6 +33,21 @@ namespace PlutoRover.Application.Services
                 rover.X = rover.X == PlutoSettings.GridSize ? default : rover.X + 1;
             }
 
+            if (command == RoverCommand.B && rover.Direction == RoverDirectionType.N)
+            {
+                rover.X = rover.X == default ? PlutoSettings.GridSize : rover.X - 1;
+            }
+
+            if (command == RoverCommand.R && rover.Direction == RoverDirectionType.N)
+            {
+                rover.Direction = RoverDirectionType.E;
+            }
+
+            if (command == RoverCommand.L && rover.Direction == RoverDirectionType.N)
+            {
+                rover.Direction = RoverDirectionType.W;
+            }
+
             await this.roverRepository.UpdateAsync(id, rover);
         }
     }
