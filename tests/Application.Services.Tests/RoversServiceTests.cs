@@ -2,6 +2,7 @@
 using CtorMock.Moq;
 using Data.Repository;
 using FluentAssertions;
+using Infrastructure.CrossCutting.Rover;
 using Moq;
 using PlutoRover.Application.Services;
 using System;
@@ -14,6 +15,7 @@ namespace Application.Services.Tests
     public class RoversServiceTests : MockBase<RoversService>
     {
         private readonly Mock<IRoverRepository> roverRepositoryMock;
+        private readonly Guid ROVER_ID = Guid.NewGuid();
 
         public RoversServiceTests()
         {
@@ -38,7 +40,6 @@ namespace Application.Services.Tests
             act.Should().BeOfType(typeof(Rover));
             act.Id.Should().NotBeEmpty();
             this.roverRepositoryMock.Verify(x => x.AddAsync(rover), Times.Once);
-
         }
 
         [Fact]
@@ -57,6 +58,87 @@ namespace Application.Services.Tests
             // Assert
             await act.Should().ThrowAsync<Exception>();
             this.roverRepositoryMock.Verify(x => x.AddAsync(rover), Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingNorthAndRoverIsNotAtGridLimitAndMovingForwardOneTime_ShouldUpdateRoverXPosition()
+        {
+            // Arrange
+            var xMock = 1;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.N;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID, 
+                It.Is<Rover>(rover => rover.X == xMock+1)), 
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingNorthAndRoverIsAtGridLimitAndMovingForwardOneTime_ShouldUpdateRoverToDefaultXPosition()
+        {
+            // Arrange
+            var xMock = PlutoSettings.GridSize;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.N;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == default)),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MoveRover_WhenPointingNorthAndRoverIsAtGridLimitAndMovingBackwardsOneTime_ShouldUpdateRoverToTheEndOfXPosition()
+        {
+            // Arrange
+            var xMock = 0;
+            var yMock = 3;
+            var directionMock = RoverDirectionType.N;
+
+            this.roverRepositoryMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new Rover(xMock, yMock, directionMock));
+
+            this.roverRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<Rover>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+
+            // Assert
+            this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
+            this.roverRepositoryMock.Verify(x => x.UpdateAsync(
+                this.ROVER_ID,
+                It.Is<Rover>(rover => rover.X == PlutoSettings.GridSize)),
+                Times.Once);
         }
     }
 }

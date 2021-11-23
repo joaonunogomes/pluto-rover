@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto
 {
-    public enum CardinalCompassPoint
+    public enum RoverDirectionType
     {
         /// <summary>
         /// North.<br/>

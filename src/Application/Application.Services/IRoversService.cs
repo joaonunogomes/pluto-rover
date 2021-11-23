@@ -8,6 +8,6 @@ namespace PlutoRover.Application.Services
     {
         Task<Rover> CreateRover(Rover rover);
 
-        void MoveRover(Guid id, RoverCommand command);
+        Task MoveRover(Guid id, RoverCommand command);
     }
 }
