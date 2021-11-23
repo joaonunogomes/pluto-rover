@@ -50,3 +50,8 @@ The following orientation was assumed when developing this API, where the arrow 
 
 A dockerfile was also provided to make it easier to run and deploy.
 If needed, for local testing purposes, you can also use the docker-compose to help with docker build and docker run execution
+
+## Project Structure
+
+This project was structure folowing Domain Drive Design patterns.
+The Visual Studio project is divided into several business layers that each one will serve its own purpose.
