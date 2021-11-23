@@ -6,8 +6,10 @@ namespace PlutoRover.Application.Services
 {
     public interface IRoversService
     {
-        Task<Rover> CreateRover(Rover rover);
+        Task<Rover> CreateRoverAsync(Rover rover);
 
-        Task MoveRover(Guid id, RoverCommand command);
+        Task MoveRoverAsync(Guid id, RoverCommand command);
+
+        Task<Rover> GetRoverAsync(Guid id);
     }
 }

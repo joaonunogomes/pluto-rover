@@ -16,7 +16,7 @@ namespace PlutoRover.Application.Services
             this.roverRepository = roverRepository;
         }
 
-        public async Task<Rover> CreateRover(Rover rover)
+        public async Task<Rover> CreateRoverAsync(Rover rover)
         {
             rover.Id = Guid.NewGuid();
 
@@ -25,7 +25,7 @@ namespace PlutoRover.Application.Services
             return rover;
         }
 
-        public async Task MoveRover(Guid id, RoverCommand command)
+        public async Task MoveRoverAsync(Guid id, RoverCommand command)
         {
             var rover = await this.roverRepository.GetAsync(id);
 
@@ -37,9 +37,20 @@ namespace PlutoRover.Application.Services
                 case RoverDirectionType.S:
                     rover.MoveRoverWhenPointingSouth(command);
                     break;
+                case RoverDirectionType.E:
+                    rover.MoveRoverWhenPointingEast(command);
+                    break;
+                case RoverDirectionType.W:
+                    rover.MoveRoverWhenPointingWest(command);
+                    break;
             }
 
             await this.roverRepository.UpdateAsync(id, rover);
+        }
+
+        public Task<Rover> GetRoverAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

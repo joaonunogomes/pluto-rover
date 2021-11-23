@@ -33,7 +33,7 @@ namespace Application.Services.Tests
                 .Returns(Task.CompletedTask);
 
             // Act
-            var act = await this.Subject.CreateRover(rover);
+            var act = await this.Subject.CreateRoverAsync(rover);
 
             // Assert
             act.Should().NotBeNull();
@@ -53,7 +53,7 @@ namespace Application.Services.Tests
                 .ThrowsAsync(new Exception());
 
             // Act
-            Func<Task> act = async () => await this.Subject.CreateRover(rover);
+            Func<Task> act = async () => await this.Subject.CreateRoverAsync(rover);
 
             // Assert
             await act.Should().ThrowAsync<Exception>();
@@ -77,7 +77,7 @@ namespace Application.Services.Tests
                 .Returns(Task.CompletedTask);
 
             // Act
-            await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+            await this.Subject.MoveRoverAsync(this.ROVER_ID, RoverCommand.F);
 
             // Assert
             this.roverRepositoryMock.Verify(x => x.GetAsync(this.ROVER_ID), Times.Once);
@@ -96,7 +96,7 @@ namespace Application.Services.Tests
                 .ThrowsAsync(new Exception());
 
             // Act
-            Func<Task> act = async () => await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+            Func<Task> act = async () => await this.Subject.MoveRoverAsync(this.ROVER_ID, RoverCommand.F);
 
             // Assert
             await act.Should().ThrowAsync<Exception>();
@@ -120,7 +120,7 @@ namespace Application.Services.Tests
                 .ThrowsAsync(new Exception());
 
             // Act
-            Func<Task> act = async () => await this.Subject.MoveRover(this.ROVER_ID, RoverCommand.F);
+            Func<Task> act = async () => await this.Subject.MoveRoverAsync(this.ROVER_ID, RoverCommand.F);
 
             // Assert
             await act.Should().ThrowAsync<Exception>();
