@@ -1,4 +1,5 @@
 ﻿using Application.Dto;
+using Application.Dto.Extensions;
 using Data.Repository;
 using Infrastructure.CrossCutting.Rover;
 using System;
@@ -28,24 +29,11 @@ namespace PlutoRover.Application.Services
         {
             var rover = await this.roverRepository.GetAsync(id);
 
-            if (command == RoverCommand.F && rover.Direction == RoverDirectionType.N)
+            switch (rover.Direction)
             {
-                rover.X = rover.X == PlutoSettings.GridSize ? default : rover.X + 1;
-            }
-
-            if (command == RoverCommand.B && rover.Direction == RoverDirectionType.N)
-            {
-                rover.X = rover.X == default ? PlutoSettings.GridSize : rover.X - 1;
-            }
-
-            if (command == RoverCommand.R && rover.Direction == RoverDirectionType.N)
-            {
-                rover.Direction = RoverDirectionType.E;
-            }
-
-            if (command == RoverCommand.L && rover.Direction == RoverDirectionType.N)
-            {
-                rover.Direction = RoverDirectionType.W;
+                case RoverDirectionType.N:
+                    rover.MoveRoverWhenPointingNorth(command);
+                    break;
             }
 
             await this.roverRepository.UpdateAsync(id, rover);
