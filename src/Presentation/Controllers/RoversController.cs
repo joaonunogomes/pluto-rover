@@ -50,6 +50,7 @@ namespace PlutoRover.ClimbingApi.Presentation.Api.Controllers
         /// </summary>
         /// <param name="id">Universal identifier of the rover.</param>
         [HttpGet]
+        [Route("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Rover))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -71,6 +72,7 @@ namespace PlutoRover.ClimbingApi.Presentation.Api.Controllers
         /// <param name="id">Universal identifier of the rover.</param>
         /// <param name="command">Instruction to move the rover.</param>
         [HttpPut]
+        [Route("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(Rover))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
