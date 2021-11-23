@@ -8,7 +8,7 @@ namespace Application.Dto.Tests.Extensions
     public class RoverExtensionsTests
     {
         [Fact]
-        public void MoveRoverWhenPointingNorth_WhenMovingForwardAndCurrentRoverYValueIsNotAtGridLimit_ShouldIncreaseYValueByOne()
+        public void MoveRoverWhenPointingNorth_WhenMovingForwardAndCurrentRoverYValueIsNotAtEndOfGrid_ShouldIncreaseYValueByOne()
         {
             // Arrange
             var xMock = 3;
@@ -28,7 +28,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingNorth_WhenMovingBackwardsAndCurrentRoverYValueIsNotAtGridLimit_ShouldDecreaseYValueByOne()
+        public void MoveRoverWhenPointingNorth_WhenMovingBackwardsAndCurrentRoverYValueIsNotAtEndOfGrid_ShouldDecreaseYValueByOne()
         {
             // Arrange
             var xMock = 3;
@@ -48,7 +48,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingNorth_WhenMovingForwardAndCurrentRoverYValueIsAtGridLimit_ShouldSetYValueToGridBeginning()
+        public void MoveRoverWhenPointingNorth_WhenMovingForwardAndCurrentRoverYValueIsAtEndOfGrid_ShouldSetYValueToGridBeginning()
         {
             // Arrange
             var xMock = 3;
@@ -128,7 +128,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingSouth_WhenMovingForwardAndCurrentRoverYValueIsNotAtGridLimit_ShouldIncreaseYValueByOne()
+        public void MoveRoverWhenPointingSouth_WhenMovingForwardAndCurrentRoverYValueIsNotAtGridBeginning_ShouldDecreaseYValueByOne()
         {
             // Arrange
             var xMock = 3;
@@ -143,12 +143,12 @@ namespace Application.Dto.Tests.Extensions
             // Assert 
             rover.Should().NotBeNull();
             rover.X.Should().Be(xMock);
-            rover.Y.Should().Be(yMock + 1);
+            rover.Y.Should().Be(yMock - 1);
             rover.Direction.Should().Be(directionMock);
         }
 
         [Fact]
-        public void MoveRoverWhenPointingSouth_WhenMovingBackwardsAndCurrentRoverYValueIsNotAtGridLimit_ShouldDecreaseYValueByOne()
+        public void MoveRoverWhenPointingSouth_WhenMovingBackwardsAndCurrentRoverYValueIsNotAtEndOfGrid_ShouldDecreaseYValueByOne()
         {
             // Arrange
             var xMock = 3;
@@ -168,11 +168,11 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingSouth_WhenMovingForwardAndCurrentRoverYValueIsAtGridLimit_ShouldSetYValueToGridBeginning()
+        public void MoveRoverWhenPointingSouth_WhenMovingForwardAndCurrentRoverYValueIsAtBeginning_ShouldSetYValueToEndOfGrid()
         {
             // Arrange
             var xMock = 3;
-            var yMock = PlutoSettings.GridSize;
+            var yMock = default(int);
             var directionMock = RoverDirectionType.S;
 
             var rover = new Rover(xMock, yMock, directionMock);
@@ -183,16 +183,16 @@ namespace Application.Dto.Tests.Extensions
             // Assert
             rover.Should().NotBeNull();
             rover.X.Should().Be(xMock);
-            rover.Y.Should().Be(default);
+            rover.Y.Should().Be(PlutoSettings.GridSize);
             rover.Direction.Should().Be(directionMock);
         }
 
         [Fact]
-        public void MoveRoverWhenPointingSouth_WhenMovingBackwardsAndCurrentRoverYValueIsAtGridBeginning_ShouldSetYValueToEndOfGrid()
+        public void MoveRoverWhenPointingSouth_WhenMovingBackwardsAndCurrentRoverYValueIsAtEndOfGrid_ShouldSetYValueToGridBeginning()
         {
             // Arrange
             var xMock = 3;
-            var yMock = default(int);
+            var yMock = PlutoSettings.GridSize;
             var directionMock = RoverDirectionType.S;
 
             var rover = new Rover(xMock, yMock, directionMock);
@@ -203,7 +203,7 @@ namespace Application.Dto.Tests.Extensions
             // Assert
             rover.Should().NotBeNull();
             rover.X.Should().Be(xMock);
-            rover.Y.Should().Be(PlutoSettings.GridSize);
+            rover.Y.Should().Be(default);
             rover.Direction.Should().Be(directionMock);
         }
 
@@ -248,7 +248,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingEast_WhenMovingForwardAndCurrentRoverXValueIsNotAtGridLimit_ShouldIncreaseXValueByOne()
+        public void MoveRoverWhenPointingEast_WhenMovingForwardAndCurrentRoverXValueIsNotAtEndOfGrid_ShouldIncreaseXValueByOne()
         {
             // Arrange
             var xMock = 35;
@@ -268,7 +268,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingEast_WhenMovingBackwardsAndCurrentRoverXValueIsNotAtGridLimit_ShouldDecreaseXValueByOne()
+        public void MoveRoverWhenPointingEast_WhenMovingBackwardsAndCurrentRoverXValueIsNotAtEndOfGrid_ShouldDecreaseXValueByOne()
         {
             // Arrange
             var xMock = 35;
@@ -288,7 +288,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingEast_WhenMovingForwardAndCurrentRoverXValueIsAtGridLimit_ShouldSetXValueToGridBeginning()
+        public void MoveRoverWhenPointingEast_WhenMovingForwardAndCurrentRoverXValueIsAtEndOfGrid_ShouldSetXValueToGridBeginning()
         {
             // Arrange
             var xMock = PlutoSettings.GridSize;
@@ -368,7 +368,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingWest_WhenMovingForwardAndCurrentRoverXValueIsNotAtGridLimit_ShoulDecreaseXValueByOne()
+        public void MoveRoverWhenPointingWest_WhenMovingForwardAndCurrentRoverXValueIsNotAtEndOfGrid_ShoulDecreaseXValueByOne()
         {
             // Arrange
             var xMock = 35;
@@ -388,7 +388,7 @@ namespace Application.Dto.Tests.Extensions
         }
 
         [Fact]
-        public void MoveRoverWhenPointingWest_WhenMovingBackwardsAndCurrentRoverXValueIsNotAtGridLimit_ShouldIncreaseXValueByOne()
+        public void MoveRoverWhenPointingWest_WhenMovingBackwardsAndCurrentRoverXValueIsNotAtEndOfGrid_ShouldIncreaseXValueByOne()
         {
             // Arrange
             var xMock = 35;
