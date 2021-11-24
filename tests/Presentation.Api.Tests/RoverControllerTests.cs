@@ -158,7 +158,7 @@ namespace PlutoRover.Presentation.Api.Tests
         }
 
         [Fact]
-        public async Task MoveAsync_WhenRoversServiceThrowsException_ShouldReturnBadRequest()
+        public async Task MoveAsync_WhenRoversServiceThrowsException_ShouldReturnBadRequestAndLogThatException()
         {
             // Arrange
             var errorMessage = "This is some error message";
